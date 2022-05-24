@@ -1,0 +1,51 @@
+TARGET = main.elf
+
+CMSIS_DIR = ../CMSIS
+CORE_SUPPORT_DIR = $(CMSIS_DIR)/CM3/CoreSupport
+DEVICE_SUPPORT_DIR = $(CMSIS_DIR)/CM3/DeviceSupport/ST/STM32F10x
+INC_DIR = ./inc
+SRC_DIR = ./src
+PARENT_INC_DIR = ../inc
+PARENT_SRC_DIR = ../src
+FREERTOS_SRC_DIR = ../FreeRTOS/Source
+FREERTOS_INC_DIR = $(FREERTOS_SRC_DIR)/include
+FREERTOS_PORT_DIR = $(FREERTOS_SRC_DIR)/portable
+FREERTOS_MEM_DIR = $(FREERTOS_PORT_DIR)/MemMang
+FREERTOS_ARM_CM3_DIR = $(FREERTOS_PORT_DIR)/GCC/ARM_CM3
+STDPERIPH_DIR = ../StdPeriph_Driver
+STDPERIPH_SRC_DIR = $(STDPERIPH_DIR)/src
+STDPERIPH_INC_DIR = $(STDPERIPH_DIR)/inc
+
+CC = arm-none-eabi-gcc
+
+CCFLAGS += -mcpu=cortex-m3
+CCFLAGS += -mthumb
+CCFLAGS += -I.
+CCFLAGS += -I$(CORE_SUPPORT_DIR)
+CCFLAGS += -I$(DEVICE_SUPPORT_DIR)
+CCFLAGS += -I$(INC_DIR)
+CCFLAGS += -I$(FREERTOS_INC_DIR)
+CCFLAGS += -I$(FREERTOS_MEM_DIR)
+CCFLAGS += -I$(FREERTOS_ARM_CM3_DIR)
+CCFLAGS += -I$(PARENT_INC_DIR)
+#CCFLAGS += -I$(STDPERIPH_INC_DIR)
+CCFLAGS += -I..
+CCFLAGS += --specs=nosys.specs
+CCFLAGS += -g
+
+INPUT += $(wildcard $(SRC_DIR)/*.c)
+INPUT += $(wildcard $(PARENT_SRC_DIR)/*.c)
+INPUT += $(wildcard $(FREERTOS_SRC_DIR)/*.c)
+INPUT += $(FREERTOS_MEM_DIR)/heap_4.c
+INPUT += $(FREERTOS_ARM_CM3_DIR)/port.c
+INPUT += $(DEVICE_SUPPORT_DIR)/startup/gcc_ride7/startup_stm32f10x_ld.s
+INPUT += $(DEVICE_SUPPORT_DIR)/system_stm32f10x.c
+INPUT += $(CORE_SUPPORT_DIR)/core_cm3.c
+#INPUT += $(wildcard $(STDPERIPH_SRC_DIR)/*.c)
+
+LD = -T../LinkerScript.ld
+
+OUTPUT = -o $(TARGET)
+
+main:
+	$(CC) $(CCFLAGS) $(INPUT) $(LD) $(OUTPUT)
