@@ -11,7 +11,7 @@ void usartSendMessage(char * message) {
 void usartSendNumber(uint32_t num) {
     uint8_t digits = 1;
     uint32_t digitsTest = 1;
-    while (num > digitsTest * 10) {
+    while (num >= digitsTest * 10) {
         digits++;
         digitsTest *= 10;
     }
