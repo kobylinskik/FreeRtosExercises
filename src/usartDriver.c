@@ -41,3 +41,17 @@ void usartReadData(char * bufferPtr, uint8_t bufferSize) {
     } while (*bufferPtr++ != '\r' && bufferSize--);
     *bufferPtr = 0;
 };
+
+uint8_t usartGetChar(void) {
+    uint8_t character = 0;
+    while (!(USART2->SR & (1 << 5))) {
+    }
+    character = USART2->DR;
+    return character;
+}
+
+void usartSendChar(uint8_t character) {
+    while (!(USART2->SR & (1 << 7))) {
+    }
+    USART2->DR = character;
+}

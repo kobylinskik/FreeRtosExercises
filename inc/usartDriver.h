@@ -7,5 +7,7 @@
 void usartSendMessage(char * message);
 void usartSendNumber(uint32_t num);
 void usartReadData(char * bufferPtr, uint8_t bufferSize);
+uint8_t usartGetChar(void);
+void usartSendChar(uint8_t character);
 
 #endif

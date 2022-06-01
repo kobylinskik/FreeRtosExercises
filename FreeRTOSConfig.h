@@ -57,6 +57,11 @@
 #define configIDLE_SHOULD_YIELD 1
 #define configUSE_MUTEXES 1
 #define configUSE_COUNTING_SEMAPHORES 1
+#define configUSE_TIMERS 1
+#define configTIMER_SERVICE_TASK_NAME "TimerService"
+#define configTIMER_TASK_PRIORITY 1
+#define configTIMER_TASK_STACK_DEPTH 256
+#define configTIMER_QUEUE_LENGTH 10
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 0
